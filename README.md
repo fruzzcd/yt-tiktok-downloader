@@ -1,6 +1,6 @@
-# fruzzdw
+# yt-tiktok-downloader
 
-скачивалка видео и музыки с youtube, tiktok, pinterest, instagram
+скачивалка видео и музыки
 
 ## запуск
 
@@ -10,13 +10,13 @@ cd site
 python app.py
 ```
 
-откроется на http://localhost:5000
+работает на http://localhost:5000
 
-## что умеет
+## что качает
 
-- youtube — mp4 видео или mp3 аудио (320kbps)
-- tiktok — mp4 видео
-- pinterest — картинки
-- instagram — видео и фото
+- youtube (mp4/mp3)
+- tiktok
+- pinterest
+- instagram
 
-нужен [ffmpeg](https://ffmpeg.org/download.html) для конвертации аудио и мержа видео+аудио
+нужен [ffmpeg](https://ffmpeg.org/download.html)
