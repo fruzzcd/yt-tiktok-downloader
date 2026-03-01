@@ -3,6 +3,7 @@ import re
 import uuid
 import threading
 import time
+import shutil
 from flask import Flask, render_template, request, jsonify, send_file
 import yt_dlp
 import requests
@@ -14,7 +15,6 @@ PAPKA = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'downloads')
 if not os.path.exists(PAPKA):
     os.makedirs(PAPKA)
 
-# ffmpeg
 ffmpeg = None
 mesta = [
     os.path.join(os.environ.get('LOCALAPPDATA', ''), 'Microsoft', 'WinGet', 'Links'),
@@ -26,11 +26,8 @@ for m in mesta:
         ffmpeg = m
         break
 
-# если не нашли в стандартных местах, ищем через PATH
-if not ffmpeg:
-    import shutil
-    if shutil.which('ffmpeg'):
-        ffmpeg = os.path.dirname(shutil.which('ffmpeg'))
+if not ffmpeg and shutil.which('ffmpeg'):
+    ffmpeg = os.path.dirname(shutil.which('ffmpeg'))
 
 print('ffmpeg:', ffmpeg)
 
@@ -58,7 +55,6 @@ def skachat(link, tip='video'):
     uid = str(uuid.uuid4())[:8]
     thumb = None
 
-    # пинтерест - картинка
     if pinterest(link):
         n = {'quiet': True, 'no_warnings': True, 'socket_timeout': 30}
         with yt_dlp.YoutubeDL(n) as ydl:
@@ -74,7 +70,6 @@ def skachat(link, tip='video'):
                 return fayl, info.get('title', 'Pinterest'), 'photo', thumb
         return None, None, None, None
 
-    # ютуб mp3
     if youtube(link) and tip == 'audio':
         n = {
             'format': 'bestaudio/best',
@@ -101,7 +96,6 @@ def skachat(link, tip='video'):
             thumb = info.get('thumbnail')
             return fayl, info.get('title', 'audio'), 'audio', thumb
 
-    # видео
     n = {
         'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best',
         'outtmpl': f'{PAPKA}/{uid}.%(ext)s',
