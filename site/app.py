@@ -17,9 +17,7 @@ if not os.path.exists(PAPKA):
 
 ffmpeg = None
 mesta = [
-    os.path.join(os.environ.get('LOCALAPPDATA', ''), 'Microsoft', 'WinGet', 'Links'),
-    r'C:\ffmpeg\bin',
-    r'C:\Program Files\ffmpeg\bin',
+    r'сюда вставь путь до ffmpeg',
 ]
 for m in mesta:
     if os.path.exists(os.path.join(m, 'ffmpeg.exe')):
