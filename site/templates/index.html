@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fruzzdw</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #09090b;
+            color: #e5e5e5;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(109, 40, 217, .1), transparent),
+                radial-gradient(ellipse 40% 30% at 70% 0%, rgba(124, 58, 237, .06), transparent);
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        nav {
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #7c3aed; }
+
+        nav a.gh {
+            color: #404040;
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color .2s;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+        }
+        nav a.gh:hover { color: #a3a3a3; border-color: #1f1f1f; }
+        nav a.gh svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .main {
+            padding-top: 120px;
+            padding-bottom: 80px;
+        }
+
+        .main h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .main p.desc {
+            color: #404040;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 36px;
+        }
+
+        .vvod {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .vvod input {
+            flex: 1;
+            background: rgba(255,255,255,.03);
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 15px 16px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .vvod input::placeholder { color: #2a2a2a; }
+        .vvod input:focus {
+            border-color: #6d28d9;
+            box-shadow: 0 0 0 3px rgba(109, 40, 217, .1), 0 2px 12px rgba(109, 40, 217, .08);
+        }
+
+        .vvod button {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 26px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .vvod button:hover { box-shadow: 0 4px 20px rgba(109, 40, 217, .3); transform: translateY(-1px); }
+        .vvod button:disabled { opacity: .4; cursor: default; transform: none; box-shadow: none; }
+        .vvod button svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .knopki {
+            display: none;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .knopki.vidno { display: flex; }
+
+        .knopki button {
+            background: #111;
+            border: 1px solid #1f1f1f;
+            color: #737373;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .knopki button:hover { color: #e5e5e5; border-color: #333; }
+        .knopki button.act {
+            color: #fff;
+            border-color: #6d28d9;
+            background: rgba(109, 40, 217, .1);
+        }
+
+        .status { margin-top: 24px; }
+
+        .status .gruzit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #525252;
+            font-size: 13px;
+        }
+        .status .gruzit .poloska {
+            width: 16px; height: 16px;
+            border: 2px solid #1f1f1f;
+            border-top-color: #6d28d9;
+            border-radius: 50%;
+            animation: krut .6s linear infinite;
+        }
+        @keyframes krut { to { transform: rotate(360deg); } }
+
+        .status .oshibka {
+            color: #ef4444;
+            font-size: 13px;
+            background: rgba(239, 68, 68, .06);
+            border: 1px solid rgba(239, 68, 68, .1);
+            padding: 12px 14px;
+            border-radius: 10px;
+        }
+
+        .kartochka {
+            display: none;
+            margin-top: 24px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: box-shadow .3s;
+        }
+        .kartochka.vidno { display: block; }
+        .kartochka:hover { box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+
+        .kartochka img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: none;
+        }
+        .kartochka img.vidno { display: block; }
+
+        .kartochka .infa { padding: 16px; }
+
+        .kartochka .infa .teg {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #737373;
+            background: #1a1a1a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .kartochka .infa h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #a3a3a3;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            word-break: break-word;
+        }
+
+        .kartochka .infa a.skachat {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .2s;
+        }
+        .kartochka .infa a.skachat:hover { box-shadow: 0 4px 20px rgba(109, 40, 217, .3); transform: translateY(-1px); }
+        .kartochka .infa a.skachat svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .platformy {
+            display: flex;
+            gap: 20px;
+            margin-top: 48px;
+            color: #262626;
+            font-size: 12px;
+        }
+        .platformy span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color .2s;
+            cursor: default;
+        }
+        .platformy span:hover { color: #525252; }
+        .platformy span svg { width: 14px; height: 14px; fill: currentColor; transition: fill .2s; }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <a href="/" class="logo">fruzz<span>dw</span></a>
+        <a href="https://github.com/fruzzcd" class="gh" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            github
+        </a>
+    </nav>
+
+    <div class="main">
+        <h1>скачай mp3<br>или mp4</h1>
+        <p class="desc">youtube, pinterest, instagram,tiktok довнлоадер</p>
+
+        <div class="vvod">
+            <input type="text" id="pole" placeholder="https://..." autocomplete="off" spellcheck="false">
+            <button id="btn" onclick="nachat()">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v-2H4v2z"/></svg>
+                скачать
+            </button>
+        </div>
+
+        <div class="knopki" id="knopki">
+            <button class="act" onclick="vibrat('video', this)">mp4</button>
+            <button onclick="vibrat('audio', this)">mp3</button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="kartochka" id="kartochka">
+            <img id="prevyu" src="" alt="">
+            <div class="infa">
+                <span class="teg" id="teg"></span>
+                <h3 id="nazvanie"></h3>
+                <a class="skachat" id="ssylka" href="#">
+                    <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v-2H4v2z"/></svg>
+                    скачать файл
+                </a>
+            </div>
+        </div>
+
+        <div class="platformy">
+            <span><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.4-1.9.5-3.8.5-5.8s-.1-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg> youtube</span>
+            <span><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.78 1.54V6.84a4.84 4.84 0 0 1-1.02-.15z"/></svg> tiktok</span>
+            <span><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-.9-.2-2.4 0-3.4l1.4-6s-.4-.7-.4-1.7c0-1.6.9-2.8 2.1-2.8 1 0 1.5.7 1.5 1.6 0 1-.6 2.4-1 3.7-.3 1.1.6 2 1.7 2 2 0 3.6-2.2 3.6-5.3 0-2.8-2-4.7-4.8-4.7-3.3 0-5.2 2.5-5.2 5 0 1 .4 2 .8 2.6.1.1.1.2.1.3l-.3 1.2c0 .2-.2.3-.4.2-1.5-.7-2.4-2.8-2.4-4.5 0-3.7 2.7-7 7.7-7 4 0 7.2 2.9 7.2 6.8 0 4-2.5 7.3-6 7.3-1.2 0-2.3-.6-2.7-1.3l-.7 2.8c-.3 1-1 2.3-1.5 3A12 12 0 1 0 12 0z"/></svg> pinterest</span>
+            <span><svg viewBox="0 0 24 24"><path d="M12 2.2c2.7 0 3 0 4.1.1 1 0 1.5.2 1.9.3.5.2.8.4 1.1.7.3.3.5.7.7 1.1.1.4.3.9.3 1.9 0 1 .1 1.4.1 4.1s0 3-.1 4.1c0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.3.3-.7.5-1.1.7-.4.1-.9.3-1.9.3-1 0-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.5-.2-1.9-.3-.5-.2-.8-.4-1.1-.7-.3-.3-.5-.7-.7-1.1-.1-.4-.3-.9-.3-1.9 0-1-.1-1.4-.1-4.1s0-3 .1-4.1c0-1 .2-1.5.3-1.9.2-.5.4-.8.7-1.1.3-.3.7-.5 1.1-.7.4-.1.9-.3 1.9-.3 1 0 1.4-.1 4.1-.1zM12 0C9.3 0 8.9 0 7.9.1 6.8.1 6.1.3 5.5.5c-.7.3-1.2.6-1.8 1.2-.6.6-.9 1.1-1.2 1.8-.2.6-.4 1.3-.4 2.4C2 7 2 7.3 2 12s0 5 .1 6c0 1.1.2 1.8.4 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.3.4 2.4.4 1 .1 1.4.1 4.1.1s3 0 4.1-.1c1.1 0 1.8-.2 2.4-.4.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.3.4-2.4.1-1 .1-1.4.1-4.1s0-3-.1-4.1c0-1.1-.2-1.8-.4-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.3-.4-2.4-.4C15 0 14.7 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-10.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg> instagram</span>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+var tip = 'video'
+var pole = document.getElementById('pole')
+var knopki = document.getElementById('knopki')
+
+pole.addEventListener('input', function() {
+    var v = this.value.toLowerCase()
+    if (v.indexOf('youtube.com') != -1 || v.indexOf('youtu.be') != -1) {
+        knopki.classList.add('vidno')
+    } else {
+        knopki.classList.remove('vidno')
+        tip = 'video'
+        var bb = knopki.querySelectorAll('button')
+        for (var i = 0; i < bb.length; i++) bb[i].classList.remove('act')
+        bb[0].classList.add('act')
+    }
+})
+
+function vibrat(t, el) {
+    tip = t
+    var bb = knopki.querySelectorAll('button')
+    for (var i = 0; i < bb.length; i++) bb[i].classList.remove('act')
+    el.classList.add('act')
+}
+
+pole.addEventListener('keydown', function(e) {
+    if (e.key == 'Enter') nachat()
+})
+
+function nachat() {
+    var link = pole.value.trim()
+    if (!link) return
+
+    var btn = document.getElementById('btn')
+    var st = document.getElementById('status')
+    var kart = document.getElementById('kartochka')
+
+    btn.disabled = true
+    kart.classList.remove('vidno')
+    st.innerHTML = '<div class="gruzit"><div class="poloska"></div> загрузка...</div>'
+
+    fetch('/download', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({link: link, type: tip})
+    })
+    .then(function(r) { return r.json() })
+    .then(function(data) {
+        if (data.error) {
+            st.innerHTML = '<div class="oshibka">' + data.error + '</div>'
+            btn.disabled = false
+            return
+        }
+
+        var id = data.task_id
+        var timer = setInterval(function() {
+            fetch('/status/' + id)
+            .then(function(r) { return r.json() })
+            .then(function(s) {
+                if (s.status == 'done') {
+                    clearInterval(timer)
+                    st.innerHTML = ''
+                    btn.disabled = false
+                    pokazat(s, id)
+                }
+                if (s.status == 'error') {
+                    clearInterval(timer)
+                    st.innerHTML = '<div class="oshibka">' + (s.error || 'чет пошло не так') + '</div>'
+                    btn.disabled = false
+                }
+            })
+            .catch(function() {})
+        }, 1500)
+    })
+    .catch(function() {
+        st.innerHTML = '<div class="oshibka">сервер не отвечает</div>'
+        btn.disabled = false
+    })
+}
+
+function pokazat(data, id) {
+    var kart = document.getElementById('kartochka')
+    var img = document.getElementById('prevyu')
+
+    if (data.thumb) {
+        img.src = data.thumb
+        img.classList.add('vidno')
+    } else {
+        img.classList.remove('vidno')
+    }
+
+    var t = data.type == 'audio' ? 'mp3' : data.type == 'photo' ? 'фото' : 'mp4'
+    if (data.size) t += ' · ' + data.size + ' мб'
+    document.getElementById('teg').textContent = t
+
+    document.getElementById('nazvanie').textContent = data.title || 'без названия'
+    document.getElementById('ssylka').href = '/file/' + id
+
+    kart.classList.add('vidno')
+}
+</script>
+
+</body>
+</html>
